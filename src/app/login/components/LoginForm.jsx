@@ -1,17 +1,35 @@
 'use client'
-import registerUser from '@/app/action/auth/registerUser';
 import React from 'react';
+import { signIn } from "next-auth/react"
+import { useRouter } from 'next/navigation';
 
-const RegisterForm = () => {
-    const handleRegister = async (e) => {
+const LoginForm = () => {
+    const router = useRouter()
+    const handleLogin = async (e) => {
         e.preventDefault()
         const form = e.target;
-        const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        console.log({ name, email, password });
-        const user = { name, email, password }
-        await registerUser(user)
+        console.log({ email, password });
+        const user = { email, password }
+        console.log(user)
+        try {
+            const res = await signIn("credentials", {
+                email,
+                password,
+                callbackUrl: "/",
+                redirect: false
+            })
+            console.log('respones', res);
+            if (res.ok) {
+                router.push("/")
+            } else {
+                alert('login failed')
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
     }
     return (
         <div>
@@ -19,13 +37,8 @@ const RegisterForm = () => {
                 <div className="hero-content flex-col lg:flex-row-reverse w-full">
                     <div className="card bg-base-100 w-full shadow-2xl">
                         <div className="card-body w-full ">
-                            <form onSubmit={handleRegister}>
+                            <form onSubmit={handleLogin}>
                                 <fieldset className="fieldset w-full">
-                                    <label className="label">Name</label>
-                                    <input type="text"
-                                        name='name'
-                                        className="input w-full"
-                                        placeholder="Name" />
                                     <label className="label">Email</label>
                                     <input type="email"
                                         name='email'
@@ -37,7 +50,7 @@ const RegisterForm = () => {
                                         className="input w-full"
                                         placeholder="Password" />
                                     <div><a className="link link-hover">Forgot password?</a></div>
-                                    <button className="btn btn-neutral mt-4">Sign up</button>
+                                    <button type='submit' className="btn btn-neutral mt-4">Sign up</button>
                                 </fieldset>
                             </form>
                         </div>
@@ -48,4 +61,4 @@ const RegisterForm = () => {
     );
 };
 
-export default RegisterForm;
+export default LoginForm;
