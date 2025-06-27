@@ -11,7 +11,7 @@ const Blog = async () => {
         <div>
             <h2>All blog</h2>
             <div className="grid grid-cols-4 gap-4">
-                {result.map((blog) => {
+                {result?.map((blog) => {
                     return (
                         <Link key={blog._id} href={`/blogDetails/${blog._id}`}>
                             <div key={blog._id} className="border p-3 rounded-lg">

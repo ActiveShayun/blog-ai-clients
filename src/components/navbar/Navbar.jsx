@@ -11,8 +11,7 @@ const Navbar = () => {
         <Link href={'/'}>Home</Link>
         <Link href={'/about'}>About</Link>
         <Link href={'/blog'}>Blog</Link>
-
-
+        <Link href={'/dashboard'}>Dashboard</Link>
     </>
 
     const isUser = <>
@@ -23,7 +22,8 @@ const Navbar = () => {
                         onClick={() => signOut()}>Log Out</Link>
                 </> :
                 <>
-                    <Link className=' mr-3' href={'/register'}>Register</Link>
+                    <Link className=' mr-3'
+                     href={'/register'}>Register</Link>
                     <Link href={'/login'}>Login</Link>
                 </>
         }

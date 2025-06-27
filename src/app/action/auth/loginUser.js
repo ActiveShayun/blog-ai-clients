@@ -10,7 +10,7 @@ export const loginUser = async (payload) => {
 
     const user = await userCollection.findOne({ email })
     console.log('findOne user', user);
-    if (!user) return { success: false }
+    if (!user) return null
 
     const isPasswordOk = await bcrypt.compare(password, user.password)
     if (!isPasswordOk) return null;
