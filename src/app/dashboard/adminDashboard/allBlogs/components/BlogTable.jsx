@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import { MdOutlineEditNote } from "react-icons/md";
 import { FcDeleteDatabase } from "react-icons/fc";
+import Link from 'next/link';
 
 const BlogTable = ({ blog, idx }) => {
     return (
@@ -17,8 +18,12 @@ const BlogTable = ({ blog, idx }) => {
                 </th>
                 <th>{blog.title}</th>
                 <th>{blog.category}</th>
-                <th className='text-2xl'><MdOutlineEditNote /></th>
-                <th  className='text-2xl'><FcDeleteDatabase /></th>
+                <th className='text-2xl'>
+                    <Link href={`/dashboard/adminDashboard/updateBlog/${blog._id}`}>
+                        <MdOutlineEditNote />
+                    </Link>
+                </th>
+                <th className='text-2xl'><FcDeleteDatabase /></th>
             </tr>
         </>
     );

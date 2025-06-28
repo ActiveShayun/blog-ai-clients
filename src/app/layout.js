@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import NextAuthProvider from "@/Provider/NextAuthProvider";
 import { Toaster } from "react-hot-toast";
+import QueryProvider from "./queryProvider/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,11 +26,13 @@ export default function RootLayout({ children }) {
       <body
         className={'antialiased max-w-7xl mx-auto'}
       >
-        <NextAuthProvider>
-          <Navbar />
-          <Toaster/>
-          {children}
-        </NextAuthProvider>
+        <QueryProvider>
+          <NextAuthProvider>
+            <Navbar />
+            <Toaster />
+            {children}
+          </NextAuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );
