@@ -1,7 +1,7 @@
 'use server'
 import Image from 'next/image';
 import React from 'react';
-import AddComment from '../commentForm/AddComment';
+import AllComment from '@/app/components/allcomment/AllComment';
 
 const BlogDetails = async ({ params }) => {
     const p = await params?.id;
@@ -16,7 +16,7 @@ const BlogDetails = async ({ params }) => {
                     alt={singleService.title} />
                 <h2 className='text-2xl font-bold'>{singleService.title}</h2>
             </div>
-            <AddComment singleService={singleService} />
+            <AllComment singleService={singleService} />
         </div>
     );
 };

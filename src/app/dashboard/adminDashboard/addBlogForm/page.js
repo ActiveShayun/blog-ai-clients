@@ -48,7 +48,8 @@ const AddBlogsForm = () => {
                 category: data.category,
                 tags: tagsArray,
                 description: data.description,
-                like: 0
+                like: 0,
+                disLike: 0
             }
             const res = await addBlogs(blog)
             console.log('add blog', res);
@@ -149,14 +150,19 @@ const AddBlogsForm = () => {
                             {
                                 loading ?
                                     <div>
-                                        <Button variant="contained" disableElevation
+                                        <Button
+                                            variant="contained"
+                                            disableElevation
                                             className="btn btn-neutral mt-4 flex items-center gap-3 tracking-widest text-lg">
                                             <span className="animate-spin text-lg">
                                                 <RiLoaderLine /></span>
                                             Adding Blog....
                                         </Button>
                                     </div> :
-                                    <Button type='submit' variant="contained" disableElevation
+                                    <Button
+                                        type='submit'
+                                        variant="contained"
+                                        disableElevation
                                         className="btn btn-neutral mt-4 tracking-widest text-lg">
                                         Add Blog</Button>
                             }

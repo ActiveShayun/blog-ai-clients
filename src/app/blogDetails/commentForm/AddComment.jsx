@@ -23,7 +23,7 @@ const labels = {
 function getLabelText(value) {
     return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
-const AddComment = ({ singleService }) => {
+const AddComment = ({ singleService, refetch }) => {
     console.log(singleService);
     const { data: session } = useSession()
     console.log(session);
@@ -52,9 +52,10 @@ const AddComment = ({ singleService }) => {
             }
             const { data } = await axios.post('http://192.168.0.105:3000/api/addComment', blog)
             console.log('add blog', data);
-            if (data.insertedId ) {
+            if (data.insertedId) {
                 toast.success('comment Added Successful')
                 setLoading(false)
+                refetch()
             }
         } catch (error) {
             console.log(error);

@@ -4,7 +4,6 @@ import axios from 'axios';
 import Image from 'next/image';
 import React from 'react';
 import Loader from '../loading';
-import toast from 'react-hot-toast';
 import Link from 'next/link';
 
 const AllBlog = () => {
@@ -21,6 +20,15 @@ const AllBlog = () => {
     const updateLikeCount = async (id,) => {
         console.log(id);
         const { data } = await axios.patch(`http://192.168.0.105:3000/api/updatedLike/${id}`,)
+        if (data.modifiedCount > 0) {
+            refetch()
+        }
+
+        console.log(data);
+    }
+    const HandleDisLikeCount = async (id,) => {
+        console.log(id);
+        const { data } = await axios.patch(`http://192.168.0.105:3000/api/disLike/${id}`,)
         if (data.modifiedCount > 0) {
             refetch()
         }
@@ -50,6 +58,13 @@ const AllBlog = () => {
                                             onClick={() => updateLikeCount(blog._id)}>
                                             Liked  {blog.like > 0 ?
                                                 blog.like : 0}
+                                        </button>
+                                    </p>
+                                    <p className="">
+                                        <button className='btn'
+                                            onClick={() => HandleDisLikeCount(blog._id)}>
+                                            Disliked  {blog.disLike > 0 ?
+                                                blog.disLike : 0}
                                         </button>
                                     </p>
                                     <Link className='btn'

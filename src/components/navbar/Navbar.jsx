@@ -10,7 +10,7 @@ const Navbar = () => {
     const deskTopMenu = <>
         <Link href={'/'}>Home</Link>
         <Link href={'/about'}>About</Link>
-        <Link href={'/blog'}>Blog</Link>
+        <Link href={'/pages/allBlogPage'}>All Blog</Link>
         <Link href={'/dashboard'}>Dashboard</Link>
     </>
 
