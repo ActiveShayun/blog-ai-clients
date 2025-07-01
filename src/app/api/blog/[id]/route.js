@@ -3,31 +3,45 @@ import dbConnect, { collectionNameObj } from "@/lib/dbConect";
 import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 
-export async function GET({ params }) {
-    const p = await params?.id
-    console.log('ObjectId', p);
+
+
+
+
+export async function GET(req, { params }) {
+    const id = await params
+    console.log('ObjectId', id);
     const blogsCollection = await dbConnect(collectionNameObj.blogsCollection)
-    const query = { _id: new ObjectId(p) }
+    const query = { _id: new ObjectId(id) }
     const result = await blogsCollection.findOne(query)
     console.log('result', result);
-    return NextResponse(JSON.stringify(result), {
+    return NextResponse.json(result, {
         status: 200,
         headers: corsHeaders
     })
 }
 
 export async function PATCH(req, { params }) {
-    const p = await params?.id
+    const id = await params
     const blogsCollection = await dbConnect(collectionNameObj.blogsCollection)
     const blog = await req.json()
-    const query = { _id: new ObjectId(p) }
+    const filter = { _id: new ObjectId(id) }
     const upDatedDoc = {
         $set: {
             ...blog
         }
     }
-    const result = await blogsCollection.updateOne(query, upDatedDoc)
-    return NextResponse(JSON.stringify(result), {
+    const result = await blogsCollection.updateOne(filter, upDatedDoc, { upsert: true })
+    return NextResponse.json(result, {
+        status: 200,
+        headers: corsHeaders
+    })
+}
+export async function DELETE(req, { params }) {
+    const id = await params
+    const blogsCollection = await dbConnect(collectionNameObj.blogsCollection)
+    const query = { _id: new ObjectId(id) }
+    const result = await blogsCollection.deleteOne(query)
+    return NextResponse.json(result, {
         status: 200,
         headers: corsHeaders
     })
@@ -36,7 +50,5 @@ export async function PATCH(req, { params }) {
 
 
 export async function OPTIONS() {
-  return new Response(null, {
-    headers: corsHeaders,
-  });
+    return NextResponse.json({}, { headers: corsHeaders })
 }

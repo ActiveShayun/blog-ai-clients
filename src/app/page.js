@@ -1,9 +1,12 @@
-import Blog from "./components/blogs/Blog";
+'use client'
+import AllBlog from "./components/AllBlog";
+
+
 
 export default function Home() {
   return (
     <div>
-      <Blog />
+      <AllBlog/>
     </div>
   );
 }

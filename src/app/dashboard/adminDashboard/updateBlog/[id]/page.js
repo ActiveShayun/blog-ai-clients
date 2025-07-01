@@ -1,17 +1,30 @@
 'use server'
+
+import dbConnect, { collectionNameObj } from "@/lib/dbConect";
+import { ObjectId } from "mongodb";
 import UpdateBlogForm from "../components/UpdateBlogForm";
 
-const UpdateBlog =  ({ params }) => {
-    const p =  params?.id
-    console.log(p);
 
-    // const data = await fetch(`http://localhost:3000/api/blog/${p}`)
-    // const singleBlog = await data.json()
-    // console.log(singleBlog);
+const UpdateBlog = async ({ params }) => {
+    const id = await params?.id
+    console.log('UpdateBlog', id);
+    if (!id) {
+        return <h1>id invalid</h1>
+    }
+    const blogsCollection = await dbConnect(collectionNameObj.blogsCollection)
+    const query = { _id: new ObjectId(id) }
+    const result = await blogsCollection.findOne(query)
+    result._id = result._id.toString()
+    // const singleBlog = await result.json()
+    console.log('singleBlog from update', result);
 
     return (
         <div>
-            <UpdateBlogForm p={p} />
+            {
+                result._id && (
+                    <UpdateBlogForm result={result} />
+                )
+            }
         </div>
     );
 };

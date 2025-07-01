@@ -34,7 +34,8 @@ const AddBlogsForm = () => {
                 title: data.title,
                 category: data.category,
                 tags: tagsArray,
-                description: data.description
+                description: data.description,
+                like: 0
             }
             const res = await addBlogs(blog)
             console.log('add blog', res);
