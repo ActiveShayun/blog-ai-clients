@@ -1,12 +1,25 @@
 'use client'
-
 import addBlogs from "@/app/apies/addBlog";
 import { uploadImage } from "@/app/utility/utility";
+import { Button } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { RiLoaderLine } from "react-icons/ri";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { styled } from '@mui/material/styles';
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
 const AddBlogsForm = () => {
     const { data: session } = useSession()
@@ -55,12 +68,20 @@ const AddBlogsForm = () => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <fieldset className="fieldset w-full">
                             <div>
-                                <label className="label mb-2 text-lg">Blog Banner</label>
-                                <input className="w-full input p-3"
-                                    {...register('blogBanner', { required: true })}
-                                    type="file"
-
-                                />
+                                <Button
+                                    component="label"
+                                    role={undefined}
+                                    variant="contained"
+                                    tabIndex={-1}
+                                    startIcon={<CloudUploadIcon />}
+                                >
+                                    Upload files
+                                    <VisuallyHiddenInput
+                                        type="file"
+                                        {...register('blogBanner', { required: true })}
+                                        multiple
+                                    />
+                                </Button>
                             </div>
                             {/* row 1 */}
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-3">
@@ -128,16 +149,16 @@ const AddBlogsForm = () => {
                             {
                                 loading ?
                                     <div>
-                                        <button
+                                        <Button variant="contained" disableElevation
                                             className="btn btn-neutral mt-4 flex items-center gap-3 tracking-widest text-lg">
                                             <span className="animate-spin text-lg">
                                                 <RiLoaderLine /></span>
                                             Adding Blog....
-                                        </button>
+                                        </Button>
                                     </div> :
-                                    <button type='submit'
+                                    <Button type='submit' variant="contained" disableElevation
                                         className="btn btn-neutral mt-4 tracking-widest text-lg">
-                                        Add Blog</button>
+                                        Add Blog</Button>
                             }
 
                         </fieldset>

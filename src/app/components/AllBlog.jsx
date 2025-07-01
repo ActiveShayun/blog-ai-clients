@@ -5,6 +5,7 @@ import Image from 'next/image';
 import React from 'react';
 import Loader from '../loading';
 import toast from 'react-hot-toast';
+import Link from 'next/link';
 
 const AllBlog = () => {
 
@@ -51,6 +52,9 @@ const AllBlog = () => {
                                                 blog.like : 0}
                                         </button>
                                     </p>
+                                    <Link className='btn'
+                                        href={`blogDetails/${blog._id}`}>
+                                        Details</Link>
                                 </div>
                             </div>
                         )
