@@ -1,6 +1,5 @@
 'use client'
 import AddComment from '@/app/blogDetails/commentForm/AddComment';
-import { Card } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
@@ -23,7 +22,7 @@ const AllComment = ({ singleService }) => {
             <div>
                 {
                     allComment?.map(c => {
-                        return <p className='text-lg'>{c.description}</p>
+                        return <p key={c._id} className='text-lg'>{c.description}</p>
                     })
                 }
             </div>

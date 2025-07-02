@@ -50,7 +50,7 @@ const AddComment = ({ singleService, refetch }) => {
                 feedBack: value,
                 like: 0
             }
-            const { data } = await axios.post('http://192.168.0.105:3000/api/addComment', blog)
+            const { data } = await axios.post('http://localhost:3000/api/addComment', blog)
             console.log('add blog', data);
             if (data.insertedId) {
                 toast.success('comment Added Successful')

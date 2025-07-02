@@ -6,7 +6,9 @@ import { NextResponse } from "next/server";
 export const GET = async (req) => {
     const { searchParams } = new URL(req?.url)
     const search = searchParams.get('search')
-    const category = searchParams.getAll('category')
+    const category = searchParams.get('category')
+    const order = searchParams.get('order') || 'desc'
+    const setOrder = order === 'asc' ? 1 : -1
 
     console.log('searchParams', search, category);
 
@@ -16,13 +18,14 @@ export const GET = async (req) => {
                 $regex: search, $options: 'i'
             }
         }),
-        ...(category.length > 0 && {
-            category: { $in: category }
+        ...(category && { category })
 
-        })
+
     }
     const blogsCollection = await dbConnect(collectionNameObj.blogsCollection)
-    const result = await blogsCollection.find(query).toArray();
+    const result = await blogsCollection.find(query)
+        .sort({ like: setOrder })
+        .toArray();
     console.log('allBlog', result);
     return NextResponse.json(result, {
         status: 200,
