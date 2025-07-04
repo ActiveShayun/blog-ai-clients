@@ -49,7 +49,14 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
 
 const ImageContainer = ({ blog }) => {
     return (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
+        <Box sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            minWidth: 300,
+            width: '100%',
+            borderRadius: 12
+
+        }}>
             <ImageButton className='rounded-2xl'
                 focusRipple
                 key={blog.title}

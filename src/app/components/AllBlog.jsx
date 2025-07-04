@@ -1,17 +1,19 @@
 'use clint'
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import Image from 'next/image';
 import React from 'react';
 import Loader from '../loading';
 import Link from 'next/link';
+import AxiosPublic from '../useAxiosHook/AxiosPublic';
+
 
 const AllBlog = () => {
+    const useAxios = AxiosPublic()
 
     const { data: blogs = [], isLoading, error, refetch } = useQuery({
         queryKey: ['blogs'],
         queryFn: async () => {
-            const res = await axios.get('http://localhost:3000/api/allBlog')
+            const res = await useAxios.get('/api/allBlog')
             console.log('allBlog', res);
             return res.data
         }
@@ -19,7 +21,7 @@ const AllBlog = () => {
 
     const updateLikeCount = async (id,) => {
         console.log(id);
-        const { data } = await axios.patch(`http://192.168.0.105:3000/api/updatedLike/${id}`,)
+        const { data } = await useAxios.patch(`/api/updatedLike/${id}`,)
         if (data.modifiedCount > 0) {
             refetch()
         }
@@ -28,8 +30,8 @@ const AllBlog = () => {
     }
     const HandleDisLikeCount = async (id,) => {
         console.log(id);
-        const { data } = await axios.patch(`http://192.168.0.105:3000/api/disLike/${id}`,)
-        if (data.modifiedCount > 0) {
+        const { data } = await useAxios.patch(`/api/disLike/${id}`,)
+        if (data.matchedCount > 0) {
             refetch()
         }
 

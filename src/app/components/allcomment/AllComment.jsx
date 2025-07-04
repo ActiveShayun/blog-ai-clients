@@ -1,5 +1,6 @@
 'use client'
 import AddComment from '@/app/blogDetails/commentForm/AddComment';
+import AxiosPublic from '@/app/useAxiosHook/AxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
@@ -7,11 +8,12 @@ import axios from 'axios';
 const AllComment = ({ singleService }) => {
     console.log('serviceId', singleService);
     const id = singleService._id
+    const useAxios = AxiosPublic()
 
     const { data: allComment = [], isLoading, refetch } = useQuery({
         queryKey: ['comments'],
         queryFn: async () => {
-            const res = await axios.get(`http://localhost:3000/api/allComments/${id}`)
+            const res = await useAxios.get(`/api/allComments/${id}`)
             console.log('allComment', res.data);
             return res.data
         }

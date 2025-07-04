@@ -7,6 +7,7 @@ import { Box, Button, Rating, TextField } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import AxiosPublic from '@/app/useAxiosHook/AxiosPublic';
 
 const labels = {
     0.5: 'Useless',
@@ -30,6 +31,7 @@ const AddComment = ({ singleService, refetch }) => {
     const [loading, setLoading] = useState(false)
     const [value, setValue] = React.useState(2);
     const [hover, setHover] = React.useState(-1);
+    const useAxios = AxiosPublic()
     console.log(value);
 
     const {
@@ -50,7 +52,7 @@ const AddComment = ({ singleService, refetch }) => {
                 feedBack: value,
                 like: 0
             }
-            const { data } = await axios.post('http://localhost:3000/api/addComment', blog)
+            const { data } = await useAxios.post('/api/addComment', blog)
             console.log('add blog', data);
             if (data.insertedId) {
                 toast.success('comment Added Successful')

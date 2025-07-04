@@ -8,6 +8,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import AxiosPublic from '@/app/useAxiosHook/AxiosPublic';
 
 const UpdateBlogForm = ({ result }) => {
 
@@ -16,6 +17,7 @@ const UpdateBlogForm = ({ result }) => {
     const [startDate, setStartDate] = useState(new Date());
     const { data: session } = useSession()
     console.log(session);
+    const useAxios = AxiosPublic()
 
 
     const {
@@ -42,7 +44,7 @@ const UpdateBlogForm = ({ result }) => {
                 description: value.description,
                 like: false
             }
-            const { data } = await axios.patch(`http://localhost:3000/api/blog/${result._id}`, blog)
+            const { data } = await useAxios.patch(`/api/blog/${result._id}`, blog)
             console.log('add blog', data);
             if (data.modifiedCount > 0) {
                 toast.success('Blog updated Successful')
@@ -107,11 +109,16 @@ const UpdateBlogForm = ({ result }) => {
                                         <select
                                             defaultValue={result.category}
                                             {...register('category', { required: true })}
-                                            className="select w-full">
+                                            className="select w-full" required>
                                             <option disabled={true}>Pick a category</option>
                                             <option value={'javaScript'}>JavaScript</option>
                                             <option value={'Nextjs'}>Next.js</option>
                                             <option value={'WebDev'}>Web Dev</option>
+                                            <option value={'lifeStyle'}>Life Style</option>
+                                            <option value={'sports'}>Sports</option>
+                                            <option value={'bussiness'}>Bussiness</option>
+                                            <option value={'travel'}>Travel</option>
+                                            <option value={'technology'}>Technology</option>
                                         </select>
                                     </div>
                                 </div>

@@ -125,6 +125,11 @@ const AddBlogsForm = () => {
                                         <option value={'javaScript'}>JavaScript</option>
                                         <option value={'Nextjs'}>Next.js</option>
                                         <option value={'WebDev'}>Web Dev</option>
+                                        <option value={'lifeStyle'}>Life Style</option>
+                                        <option value={'sports'}>Sports</option>
+                                        <option value={'bussiness'}>Bussiness</option>
+                                        <option value={'travel'}>Travel</option>
+                                        <option value={'technology'}>Technology</option>
                                     </select>
                                 </div>
                             </div>

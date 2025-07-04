@@ -6,6 +6,7 @@ import debounce from 'lodash.debounce';
 import React, { useMemo, useState } from 'react';
 import CardBlog from './CardBlog';
 import { TextField } from '@mui/material';
+import AxiosPublic from '@/app/useAxiosHook/AxiosPublic';
 
 
 const AllBlog = () => {
@@ -13,6 +14,7 @@ const AllBlog = () => {
     const [category, setCategory] = useState('')
     const [order, setOrder] = useState('')
     console.log(category, order);
+    const useAxios = AxiosPublic()
 
     const handleSearchChange = useMemo(() =>
         debounce((value) => {
@@ -24,7 +26,7 @@ const AllBlog = () => {
     const { data: blogs = [], isLoading, error, refetch } = useQuery({
         queryKey: ['blogs', search, category, order],
         queryFn: async () => {
-            const res = await axios.get(`http://192.168.0.107:3000/api/allBlog`, {
+            const res = await useAxios.get(`/api/allBlog`, {
                 params: { search, category, order }
             })
             console.log('allBlog', res);

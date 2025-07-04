@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-     images: {
+  images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'i.ibb.co',
+        pathname: '/**', // এটা যোগ করা জরুরি
       },
     ],
   },

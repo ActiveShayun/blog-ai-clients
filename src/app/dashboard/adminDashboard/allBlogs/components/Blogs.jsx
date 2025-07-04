@@ -5,14 +5,16 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import Loader from '@/app/loading';
 import toast from 'react-hot-toast';
+import AxiosPublic from '@/app/useAxiosHook/AxiosPublic';
 
 
 const Blogs = () => {
+    const useAxios = AxiosPublic()
 
     const { data: blogs = [], isLoading, error, refetch } = useQuery({
         queryKey: ['blogs'],
         queryFn: async () => {
-            const res = await axios.get('http://localhost:3000/api/allBlog')
+            const res = await useAxios.get('/api/allBlog')
             console.log('allBlog', res);
             return res.data
         }
@@ -22,7 +24,7 @@ const Blogs = () => {
 
     const handleBlogDelete = async (id) => {
         toast.success('Deleting Ongoing...')
-        const res = await axios.delete(`http://192.168.0.105:3000/api/blog/${id}`)
+        const res = await useAxios.delete(`/api/blog/${id}`)
         console.log('delete', res);
         if (res.data.deletedCount > 0) {
             toast.success('Deleting successfully Done')
