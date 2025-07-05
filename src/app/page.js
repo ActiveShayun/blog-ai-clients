@@ -1,6 +1,7 @@
 'use client'
-import AllBlog from "./components/AllBlog";
 import Banner from "./components/banner/Banner";
+import Culture from "./components/culture/Culture";
+import Layout from "./components/lifeStyle/lifestyleLayout/Layout";
 import TechLayout from "./components/technologySection/layout/TechLayout";
 import Travel from "./components/travelSection/Travel";
 
@@ -11,15 +12,18 @@ export default function Home() {
     <div>
       <Banner />
       <Travel />
-      <div className="grid grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         <section className="col-span-8">
           <TechLayout />
+          {/* lifestyle layout */}
+          <Layout />
+          {/* culture section */}
+          <Culture />
         </section>
         <aside className="col-span-4 mt-16">
           aside
         </aside>
       </div>
-      <AllBlog />
     </div>
   );
 }

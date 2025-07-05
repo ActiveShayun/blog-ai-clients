@@ -13,7 +13,7 @@ const Technology = () => {
     return (
         <div>
             <div className='border-b border-gray-200 mb-8 flex items-center justify-between'>
-                <h2 className='text-2xl font-semibold border-b border-red-600 w-[90px]'>Travel</h2>
+                <h2 className='text-2xl font-semibold border-b border-red-600 w-[90px]'>Technology</h2>
                 <Link href={'/'}>View All</Link>
             </div>
             <div>

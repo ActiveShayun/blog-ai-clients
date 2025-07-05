@@ -11,10 +11,10 @@ const BlogTable = ({ blog, idx, handleBlogDelete }) => {
                 <th>{idx + 1}</th>
                 <th>{blog.authorName}</th>
                 <th>
-                    <Image className='w-[50px] h-[50px] rounded-full border'
+                    <img className='w-[50px] h-[50px] rounded-full border'
                         src={blog?.blogBanner}
                         alt={blog?.title}
-                        width={50} height={50} />
+                       />
                 </th>
                 <th>{blog.title}</th>
                 <th>{blog.category}</th>

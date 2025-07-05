@@ -28,11 +28,12 @@ const AddBlogsForm = () => {
 
     const {
         register,
-        formState: { errors },
+        formState: { error },
         handleSubmit,
+        reset
     } = useForm()
     const onSubmit = async (data) => {
-        toast.success('Blog Adding...')
+        const toastId = toast.loading('Blog Adding...')
         setLoading(true)
         console.log('data', data)
         const tagsArray = data.tags.split(',').map(tag => tag.trim())
@@ -54,11 +55,14 @@ const AddBlogsForm = () => {
             const res = await addBlogs(blog)
             console.log('add blog', res);
             if (res.insertedId) {
-                toast.success('Blog Added Successful')
+                toast.success('Blog Added Successful', { id: toastId })
                 setLoading(false)
+                reset()
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -120,7 +124,7 @@ const AddBlogsForm = () => {
                                     <select
                                         {...register('category', { required: true })}
                                         defaultValue="Pick a category"
-                                        className="select w-full">
+                                        className="select w-full" required>
                                         <option disabled={true}>Pick a category</option>
                                         <option value={'javaScript'}>JavaScript</option>
                                         <option value={'Nextjs'}>Next.js</option>
@@ -129,7 +133,7 @@ const AddBlogsForm = () => {
                                         <option value={'sports'}>Sports</option>
                                         <option value={'bussiness'}>Bussiness</option>
                                         <option value={'travel'}>Travel</option>
-                                        <option value={'technology'}>Technology</option>
+                                        <option value={'culture'}>Culture</option>
                                     </select>
                                 </div>
                             </div>
@@ -156,6 +160,7 @@ const AddBlogsForm = () => {
                                 loading ?
                                     <div>
                                         <Button
+                                        type="submit"
                                             variant="contained"
                                             disableElevation
                                             className="btn btn-neutral mt-4 flex items-center gap-3 tracking-widest text-lg">

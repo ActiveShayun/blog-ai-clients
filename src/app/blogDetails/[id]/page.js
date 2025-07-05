@@ -1,5 +1,4 @@
 'use server'
-import Image from 'next/image';
 import React from 'react';
 import AllComment from '@/app/components/allcomment/AllComment';
 
@@ -10,9 +9,8 @@ const BlogDetails = async ({ params }) => {
     return (
         <div>
             <div>
-                <Image
-                    src={singleService.blogBanner}
-                    width={200} height={200}
+                <img
+                   src={singleService.blogBanner}
                     alt={singleService.title} />
                 <h2 className='text-2xl font-bold'>{singleService.title}</h2>
             </div>

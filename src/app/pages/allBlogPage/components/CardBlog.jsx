@@ -28,9 +28,8 @@ const CardBlog = ({ blog }) => {
                     </p>
                 </div>
                 <div className='flex items-center gap-3'>
-                    <Image className='rounded-full w-[50px] h-[50px] object-cover mt-3'
+                    <img className='rounded-full w-[50px] h-[50px] object-cover mt-3'
                         src={blog.blogBanner}
-                        width={200} height={200}
                         alt={blog.title} />
                     <div className='text-xs font-bold'>
                         <h3>John Row</h3>

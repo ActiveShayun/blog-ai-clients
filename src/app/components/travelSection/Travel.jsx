@@ -15,7 +15,7 @@ const Travel = () => {
                 <h2 className='text-xl font-medium border-b border-red-600 w-[90px]'>Travel</h2>
                 <Link href={'/'}>View All</Link>
             </div>
-            <div className='grid grid-cols-3 gap-4'>
+            <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
                 {isLoading ? <Loader /> :
                     travels?.map(travel => {
                         return (
