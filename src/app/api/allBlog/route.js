@@ -7,8 +7,6 @@ export const GET = async (req) => {
     const { searchParams } = new URL(req?.url)
     const search = searchParams.get('search')
     const category = searchParams.get('category')
-    const sortDate = searchParams.get('date') || 'desc'
-    const sortById = sortDate === 'asc' ? -1 : 1
     const order = searchParams.get('order') || 'desc'
     const setOrder = order === 'asc' ? 1 : -1
 
@@ -26,7 +24,7 @@ export const GET = async (req) => {
     }
     const blogsCollection = await dbConnect(collectionNameObj.blogsCollection)
     const result = await blogsCollection.find(query)
-        .sort({ _id: sortById, like: setOrder })
+        .sort({ like: setOrder, })
         .toArray();
     console.log('allBlog', result);
     return NextResponse.json(result, {

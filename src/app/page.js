@@ -1,6 +1,7 @@
 'use client'
 import Banner from "./components/banner/Banner";
 import Culture from "./components/culture/Culture";
+import Latest from "./components/latestSection/Latest";
 import Layout from "./components/lifeStyle/lifestyleLayout/Layout";
 import TechLayout from "./components/technologySection/layout/TechLayout";
 import Travel from "./components/travelSection/Travel";
@@ -24,6 +25,7 @@ export default function Home() {
           aside
         </aside>
       </div>
+      <Latest />
     </div>
   );
 }
