@@ -4,6 +4,7 @@ import GlobalApi from '@/app/globalApi/GlobalApi';
 import Title from '@/components/shared/title/Title';
 import { formattedMongoDbId } from '@/app/utility/formatedDate/formatDate';
 import Link from 'next/link';
+import Loader from '@/app/loading';
 
 
 
@@ -21,21 +22,23 @@ const Latest = () => {
                 <Link href={'/'}>View All</Link>
             </div>
             <div className='grid grid-cols-1 lg:grid-cols-4 gap-4'>
-                {
+                {isLoading ? <Loader /> :
                     latest.map(l => {
                         return (
-                            <data >
-                                <div>
+                            <data key={l._id} >
+                                <div className='border-b-2 py-3 rounded-lg border-green-600'>
 
                                     <img
                                         className='h-50 w-full object-cover'
                                         src={l.blogBanner}
                                         alt="" />
                                     <div className='flex items-center gap-3 text-gray-500 text-xs font-bold my-3'>
-                                        <p className='text-red-600'>{l.authorName}</p>
+                                        <p className='text-red-600'>By {l.authorName}</p>
                                         <p>{formattedMongoDbId(l._id)}</p>
                                     </div>
-                                    <Title title={l.title} />
+                                    <Link href={`/blogDetails/${l._id}`}>
+                                        <Title title={l.title} />
+                                    </Link>
                                 </div>
                             </data>
                         )

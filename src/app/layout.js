@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar/Navbar";
 import NextAuthProvider from "@/Provider/NextAuthProvider";
 import { Toaster } from "react-hot-toast";
 import QueryProvider from "./queryProvider/QueryProvider";
+import Footer from "@/components/shared/footer/Footer";
 
 
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
             <Navbar />
             <Toaster />
             {children}
+            <Footer/>
           </NextAuthProvider>
         </QueryProvider>
       </body>
