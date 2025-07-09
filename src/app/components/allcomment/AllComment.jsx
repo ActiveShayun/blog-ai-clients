@@ -22,6 +22,8 @@ const AllComment = ({ singlePost }) => {
         }
     })
 
+
+
     return (
         <div>
             <div className='border-b border-gray-200 mb-8 text-2xl font-medium'>

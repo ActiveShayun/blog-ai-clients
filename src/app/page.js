@@ -3,6 +3,7 @@ import Banner from "./components/banner/Banner";
 import Culture from "./components/culture/Culture";
 import Latest from "./components/latestSection/Latest";
 import Layout from "./components/lifeStyle/lifestyleLayout/Layout";
+import Popular from "./components/popularSection/aside/Popular";
 import TechLayout from "./components/technologySection/layout/TechLayout";
 import Travel from "./components/travelSection/Travel";
 
@@ -22,7 +23,7 @@ export default function Home() {
           <Culture />
         </section>
         <aside className="col-span-4 mt-16">
-          aside
+        <Popular/>
         </aside>
       </div>
       <Latest />

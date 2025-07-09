@@ -13,6 +13,7 @@ const SingleCol = () => {
                 lifeStyle?.map(style => {
                     return (
                         <Card
+                            authorName={style.authorName}
                             w={true}
                             blogBanner={style.blogBanner}
                             title={style.title}

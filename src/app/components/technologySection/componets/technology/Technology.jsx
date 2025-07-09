@@ -1,8 +1,8 @@
 'use client'
 import GlobalApi from '@/app/globalApi/GlobalApi';
 import React from 'react';
-import Card from '../card/Card';
 import Link from 'next/link';
+import Card from '@/components/shared/card/Card';
 
 
 const Technology = () => {
@@ -20,7 +20,13 @@ const Technology = () => {
                 {
                     technology?.map(tech => {
                         return (
-                            <Card key={tech._id} tech={tech} />
+                            <Card key={tech._id}
+                                _id={tech._id}
+                                authorName={tech.authorName}
+                                blogBanner={tech.blogBanner}
+                                title={tech.title}
+                                category={tech.category}
+                                description={tech.description} />
                         )
                     })
                 }

@@ -5,6 +5,7 @@ import Title from '@/components/shared/title/Title';
 import { formattedMongoDbId } from '@/app/utility/formatedDate/formatDate';
 import Link from 'next/link';
 import Loader from '@/app/loading';
+import Card from '@/components/shared/card/Card';
 
 
 
@@ -25,22 +26,14 @@ const Latest = () => {
                 {isLoading ? <Loader /> :
                     latest.map(l => {
                         return (
-                            <data key={l._id} >
-                                <div className='border-b-2 py-3 rounded-lg border-green-600'>
-
-                                    <img
-                                        className='h-50 w-full object-cover'
-                                        src={l.blogBanner}
-                                        alt="" />
-                                    <div className='flex items-center gap-3 text-gray-500 text-xs font-bold my-3'>
-                                        <p className='text-red-600'>By {l.authorName}</p>
-                                        <p>{formattedMongoDbId(l._id)}</p>
-                                    </div>
-                                    <Link href={`/blogDetails/${l._id}`}>
-                                        <Title title={l.title} />
-                                    </Link>
-                                </div>
-                            </data>
+                            <Card key={l._id}
+                                _id={l._id}
+                                paragraphTextShow={true}
+                                authorName={l.authorName}
+                                blogBanner={l.blogBanner}
+                                title={l.title}
+                                category={l.category}
+                                description={l.description} />
                         )
                     })
                 }

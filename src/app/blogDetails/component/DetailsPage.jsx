@@ -104,7 +104,11 @@ const DetailsPage = ({ params }) => {
                     <p className='mt-8 text-gray-500'>{singlePost?.description}</p>
                 </div>
             </div>
-            <AllComment singlePost={singlePost} />
+            {
+                singlePost?._id && (
+                    <AllComment singlePost={singlePost} />
+                )
+            }
         </div>
     );
 };
