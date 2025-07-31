@@ -3,6 +3,7 @@ import { formattedMongoDbId } from '@/app/utility/formatedDate/formatDate';
 
 import React from 'react';
 import Title from '../title/Title';
+import Link from 'next/link';
 
 const Card = ({ paragraphTextShow, category, blogBanner, w, p, title, _id, description, authorName }) => {
     console.log(title);
@@ -25,9 +26,10 @@ const Card = ({ paragraphTextShow, category, blogBanner, w, p, title, _id, descr
                     <p className='text-[#EC0E0E]'>{authorName}</p>
                     <p>{formattedMongoDbId(_id)}</p>
                 </div>
-                <Title title={title} />
-
-                <p className={`${paragraphTextShow ? 'hidden' : 'block'} text-gray-500 mt-2 `}>{description.slice(1, 150)}...</p>
+                <Link href={`/blogDetails/${_id}`}>
+                    <Title title={title} />
+                </Link>
+                <p className={`${paragraphTextShow ? 'hidden' : 'block'} text-gray-500 mt-2 `}>{description?.slice(1, 150)}...</p>
             </div>
         </div>
     );

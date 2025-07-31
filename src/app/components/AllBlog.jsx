@@ -4,11 +4,11 @@ import Image from 'next/image';
 import React from 'react';
 import Loader from '../loading';
 import Link from 'next/link';
-import AxiosPublic from '../useAxiosHook/AxiosPublic';
+import useAxiosPublic from '../useAxiosHook/useAxiosPublic';
 
 
 const AllBlog = () => {
-    const useAxios = AxiosPublic()
+    const useAxios = useAxiosPublic()
 
     const { data: blogs = [], isLoading, error, refetch } = useQuery({
         queryKey: ['blogs'],

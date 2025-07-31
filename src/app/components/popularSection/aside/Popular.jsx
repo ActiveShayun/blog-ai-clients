@@ -18,9 +18,14 @@ const Popular = () => {
 
     console.log('allPopular', popular);
     return (
-        <div>
-            <h2 className='text-2xl font-semibold
-             text-center text-red-600 mb-5'>Popular</h2>
+        <div className='px-4'>
+            <div className='mb-4'>
+                <h2 className='text-2xl font-semibold
+             text-center text-red-600 mb-2'>Popular</h2>
+                <p className='border-b border-red-700 w-[30px] border h-[2px]
+                 text-white text-center mx-auto'>r</p>
+            </div>
+
             {isLoading ? <Loader /> :
                 popular?.map(p => {
                     return (

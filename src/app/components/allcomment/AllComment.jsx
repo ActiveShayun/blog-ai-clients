@@ -1,9 +1,9 @@
 'use client'
 import AddComment from '@/app/blogDetails/commentForm/AddComment';
-import AxiosPublic from '@/app/useAxiosHook/AxiosPublic';
 import { formattedMongoDbId } from '@/app/utility/formatedDate/formatDate';
 import { useQuery } from '@tanstack/react-query';
 import FeedBack from './components/FeedBack';
+import useAxiosPublic from '@/app/useAxiosHook/useAxiosPublic';
 
 
 
@@ -11,7 +11,7 @@ const AllComment = ({ singlePost }) => {
 
     console.log('serviceId', singlePost);
     const id = singlePost?._id
-    const useAxios = AxiosPublic()
+    const useAxios = useAxiosPublic()
 
     const { data: allComment = [], isLoading, refetch } = useQuery({
         queryKey: ['comments'],

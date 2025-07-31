@@ -11,7 +11,7 @@ const Layout = () => {
                 <h2 className='text-2xl font-semibold border-b border-red-600 w-[120px]'>Life Style</h2>
                 <Link href={'/'}>View All</Link>
             </div>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 w-full'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
                 <section>
                     <SingleCol />
                 </section>

@@ -1,6 +1,6 @@
 'use server'
 import { corsHeaders } from "@/lib/corsHeaders ";
-import dbConnect, { collectionNameObj } from "@/lib/dbConect";
+import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 

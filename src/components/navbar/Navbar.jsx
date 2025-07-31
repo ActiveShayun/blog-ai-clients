@@ -6,13 +6,26 @@ import React from 'react';
 const Navbar = () => {
     const { status, data: session } = useSession()
     console.log(session?.user.name);
-    console.log('status', session, status);
+    console.log('status', session);
     const deskTopMenu = <>
         <Link href={'/'}>Home</Link>
         <Link href={'/about'}>About</Link>
         <Link href={'/pages/allBlogPage'}>All Blog</Link>
-        <Link href={'/dashboard'}>Dashboard</Link>
+        {session ?
+            <>
+                {
+                    session?.user?.role === 'Admin' ?
+                        <Link href={'/adminDashboard/addBlogForm'}>Dashboard</Link> :
+
+                        <Link href={'/userDashboard/myAddedBlogs'}>Dashboard</Link>
+                }
+            </> :
+            <Link className=' mr-3'
+                href={'/pages/userAuthentication/loginForm'}>Dashboard</Link>
+        }
     </>
+
+
 
     const isUser = <>
         {
@@ -22,9 +35,7 @@ const Navbar = () => {
                         onClick={() => signOut()}>Log Out</Link>
                 </> :
                 <>
-                    <Link className=' mr-3'
-                     href={'/register'}>Register</Link>
-                    <Link href={'/login'}>Login</Link>
+
                 </>
         }
     </>

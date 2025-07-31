@@ -6,7 +6,7 @@ import debounce from 'lodash.debounce';
 import React, { useMemo, useState } from 'react';
 import CardBlog from './CardBlog';
 import { TextField } from '@mui/material';
-import AxiosPublic from '@/app/useAxiosHook/AxiosPublic';
+import useAxiosPublic from '@/app/useAxiosHook/useAxiosPublic';
 
 
 const AllBlog = () => {
@@ -14,7 +14,7 @@ const AllBlog = () => {
     const [category, setCategory] = useState('')
     const [order, setOrder] = useState('')
     console.log(category, order);
-    const useAxios = AxiosPublic()
+    const useAxios = useAxiosPublic()
 
     const handleSearchChange = useMemo(() =>
         debounce((value) => {

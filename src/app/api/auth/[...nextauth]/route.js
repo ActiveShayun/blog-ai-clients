@@ -2,39 +2,46 @@ import NextAuth from "next-auth"
 // import GitHubProvider from "next-auth/providers/github";
 // import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials"
-import { loginUser } from "@/app/action/auth/loginUser";
+import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
+import bcrypt from "bcryptjs";
 export const authOptions = {
     // Configure one or more authentication providers
     providers: [
         CredentialsProvider({
             // The name to display on the sign in form (e.g. 'Sign in with...')
             name: 'Credentials',
-            // The credentials is used to generate a suitable form on the sign in page.
-            // You can specify whatever fields you are expecting to be submitted.
-            // e.g. domain, username, password, 2FA token, etc.
-            // You can pass any HTML attribute to the <input> tag through the object.
             credentials: {
-                username: { label: "Email", type: "text", placeholder: "Enter password" },
-                password: { label: "Password", type: "password" }
+                username: { label: "Email", type: "text", placeholder: "Enter email" },
+                password: { label: "Password", type: "password", placeholder: "Enter password" }
             },
             async authorize(credentials, req) {
-                console.log(credentials);
-                // You need to provide your own logic here that takes the credentials
-                // submitted and returns either a object representing a user or value
-                // that is false/null if the credentials are invalid.
-                // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-                // You can also use the `req` object to obtain additional parameters
-                // (i.e., the request IP address)
+                console.log('credentials', credentials);
+                try {
+                    const userCollection = await dbConnect(collectionNameObj.userCollection)
+                    const user = await userCollection.findOne({ email: credentials.email })
+                    console.log('credentials user', user);
+                    if (!user) {
+                        throw new Error('No user found')
+                    }
 
-                const user = await loginUser(credentials)
-                console.log('credentials user', user);
+                    const isValid = await bcrypt.compare(credentials.password, user.password)
+                    if (!isValid) throw new Error('Password is incorrect')
 
-                // If no error and we have user data, return it
-                if (user) {
-                    return user
+                    // If no error and we have user data, return it
+                    if (user) {
+                        return {
+                            id: user._id.toString(),
+                            name: user.name || null,
+                            email: user.email,
+                            role: user.role,
+                        }
+                    }
+                    // Return null if user data could not be retrieved
+                    return { success: false }
+                } catch (error) {
+                    console.log('authentication error');
+                    throw new Error('authentication error')
                 }
-                // Return null if user data could not be retrieved
-                return { success: false }
             }
         }),
         // GoogleProvider({
@@ -47,8 +54,29 @@ export const authOptions = {
         // })
     ],
     pages: {
-        signIn: '/login'
+        signIn: '/pages/userAuthentication/loginForm',
+        error: '/pages/userAuthentication/loginForm?=1'
     },
+    callbacks: {
+        async jwt({ token, user }) {
+            console.log('create admin', token, user);
+            if (user) {
+                token.id = token.user
+                token.role = user.role
+            }
+            return token
+        },
+        async session({ session, token }) {
+            session.user.id = token.id
+            session.user.role = token.role
+            console.log('session ', session, token);
+            return session
+        }
+    },
+    secret: process.env.AUTH_SECRET,
+    session: {
+        strategy: 'jwt'
+    }
 }
 
 const handler = NextAuth(authOptions)

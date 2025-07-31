@@ -5,14 +5,14 @@ import { FaFacebookSquare, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { FcDislike, FcLike } from "react-icons/fc";
 import { FaXTwitter } from "react-icons/fa6";
 import Link from 'next/link';
-import AxiosPublic from '@/app/useAxiosHook/AxiosPublic';
 import AllComment from '@/app/components/allcomment/AllComment';
 import { useQuery } from '@tanstack/react-query';
+import useAxiosPublic from '@/app/useAxiosHook/useAxiosPublic';
 
 
 const DetailsPage = ({ params }) => {
     const id = params
-    const useAxios = AxiosPublic()
+    const useAxios = useAxiosPublic()
 
     const { data: singlePost, isLoading, refetch } = useQuery({
         queryKey: ['singlePost'],

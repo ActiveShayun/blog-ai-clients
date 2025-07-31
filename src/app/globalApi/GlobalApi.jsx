@@ -1,9 +1,9 @@
 'use client'
 import { useQuery } from '@tanstack/react-query';
-import AxiosPublic from '../useAxiosHook/AxiosPublic';
+import useAxiosPublic from '../useAxiosHook/useAxiosPublic';
 
 const GlobalApi = () => {
-    const useAxios = AxiosPublic()
+    const useAxios = useAxiosPublic()
     const { data: allData = [], error, isLoading, refetch } = useQuery({
         queryKey: ['globalApi'],
         queryFn: async () => {

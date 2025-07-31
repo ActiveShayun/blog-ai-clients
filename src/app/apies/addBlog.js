@@ -1,5 +1,5 @@
 'use server'
-const { default: dbConnect, collectionNameObj } = require("@/lib/dbConect")
+const { default: dbConnect, collectionNameObj } = require("@/lib/dbConnect")
 
 
 const addBlogs = async (payload) => {

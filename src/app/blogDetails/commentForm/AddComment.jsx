@@ -6,10 +6,10 @@ import { RiLoaderLine } from 'react-icons/ri';
 import { Box, Button, Rating, TextField } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import toast from 'react-hot-toast';
-import AxiosPublic from '@/app/useAxiosHook/AxiosPublic';
 import { uploadImage } from '@/app/utility/utility';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import styled from '@emotion/styled';
+import useAxiosPublic from '@/app/useAxiosHook/useAxiosPublic';
 const labels = {
     0.5: 'Useless',
     1: 'Useless+',
@@ -45,7 +45,7 @@ const AddComment = ({ singlePost, refetch }) => {
     const [hover, setHover] = React.useState(-1);
     const [error, setError] = useState('');
 
-    const useAxios = AxiosPublic()
+    const useAxios = useAxiosPublic()
     console.log(value);
 
     const {
