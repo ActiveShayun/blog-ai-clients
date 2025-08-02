@@ -1,10 +1,11 @@
 import { getServerSession } from "next-auth";
 import NavLink from "../adminDashboard/navLink/NavLink";
+import { redirect } from "next/navigation";
+import { getToken } from "next-auth/jwt";
 
 const UserDashboardLayout = async ({ children }) => {
 
     const session = await getServerSession()
-    console.log(session);
 
     if (!session && session?.user?.role !== 'user') {
         redirect('/pages/userAuthentication/loginForm');

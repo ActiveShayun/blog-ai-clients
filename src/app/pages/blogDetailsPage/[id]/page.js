@@ -1,48 +1,50 @@
-'use client'
+'use server'
 import React from 'react';
 import { formattedMongoDbId } from '@/app/utility/formatedDate/formatDate';
 import { FaFacebookSquare, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import { FcDislike, FcLike } from "react-icons/fc";
+import { FcDislike } from "react-icons/fc";
 import { FaXTwitter } from "react-icons/fa6";
 import Link from 'next/link';
-import AllComment from '@/app/components/allcomment/AllComment';
-import { useQuery } from '@tanstack/react-query';
-import useAxiosPublic from '@/app/useAxiosHook/useAxiosPublic';
+import dbConnect, { collectionNameObj } from '@/lib/dbConnect';
+import { ObjectId } from 'mongodb';
+import Image from 'next/image';
+import UpdateLike from '../components/UpdateLike.jsx'
+import AllComment from '../components/allComment/AllComment.jsx';
+import { getServerSession } from 'next-auth';
 
 
-const DetailsPage = ({ params }) => {
-    const id = params
-    const useAxios = useAxiosPublic()
+const DetailsPage = async ({ params }) => {
+    const session = await getServerSession();
+    // console.log(session);
+    const id = params?.id;
 
-    const { data: singlePost, isLoading, refetch } = useQuery({
-        queryKey: ['singlePost'],
-        queryFn: async () => {
-            const res = await useAxios.get(`/api/blog/${id}`)
-            console.log('single post', res);
-            return res.data
-        }
-    })
+    const blogsCollection = await dbConnect(collectionNameObj.blogsCollection);
+    const viewsCollection = await dbConnect(collectionNameObj.viewsCollection)
 
-    console.log('singlePost', singlePost);
+    const singleView = await viewsCollection.findOne(
+        { email: session?.user?.email },
+        { postId: new ObjectId(id) }
+    );
+    console.log('singleView', singleView);
 
-    const updateLikeCount = async (id,) => {
-        console.log(id);
-        const { data } = await useAxios.patch(`/api/updatedLike/${id}`,)
-        if (data.modifiedCount > 0) {
-            refetch()
-        }
+    if (!singleView) {
+        const views = await viewsCollection.insertOne({
+            postId: id,
+            email: session?.user?.email
+        })
+        const updateView = await blogsCollection.updateOne(
+            { _id: new ObjectId(id) },
+            { $inc: { views: 1 } }
+        );
+        // console.log('updateView', updateView, 'viewsCollection', views);
+    };
 
-        console.log(data);
-    }
-    const handleDisLikeCount = async (id,) => {
-        console.log(id);
-        const { data } = await useAxios.patch(`/api/disLike/${id}`,)
-        if (data.matchedCount > 0) {
-            refetch()
-        }
-
-        console.log(data);
-    }
+    const blog = await blogsCollection.findOne({ _id: new ObjectId(id) })
+    const singlePost = {
+        ...blog,
+        _id: blog?._id.toString(),
+    };
+    // console.log(singlePost);
 
     return (
         <div>
@@ -68,11 +70,19 @@ const DetailsPage = ({ params }) => {
                 {/* image and date area */}
                 <div className='flex items-center gap-3 mb-4'>
                     <p className='font-semibold '>BY <span className='text-red-700'>{singlePost?.authorName}</span> - </p>
-                    <p className='text-gray-400 font-semibold text-xs'>{formattedMongoDbId(singlePost?._id)}</p>
+                    <p className='text-gray-400 font-semibold text-xs'>
+                        {formattedMongoDbId(singlePost?._id)}</p>
                 </div>
-                <img className='lg:h-[600px] w-full object-cover'
-                    src={singlePost?.blogBanner}
-                    alt={singlePost?.title} />
+                <div className="h-[600px] mx-auto">
+                    <Image
+                        src={singlePost?.blogBanner}
+                        alt={singlePost?.title}
+                        width={300}
+                        height={300}
+                        className="w-full h-full rounded-md object-cover"
+                        unoptimized
+                    />
+                </div>
 
                 {/* SOCIAL LINK */}
                 <div className='mb-8'>
@@ -90,23 +100,14 @@ const DetailsPage = ({ params }) => {
                         <Link href={'/'}>
                             <FaInstagram />
                         </Link>
-                        <button onClick={() => updateLikeCount(singlePost?._id)}
-                            className='flex items-center gap-2 cursor-pointer text-red-700'>
-                            <FcLike />
-                            <span>{singlePost?.like}</span>
-                        </button>
-                        <button onClick={() => handleDisLikeCount(singlePost?._id)}
-                            className='flex items-center gap-2 cursor-pointer text-red-700'>
-                            <FcDislike />
-                            <span>{singlePost?.disLike}</span>
-                        </button>
+                        <UpdateLike singlePost={singlePost} />
                     </div>
                     <p className='mt-8 text-gray-500'>{singlePost?.description}</p>
                 </div>
             </div>
             {
-                singlePost?._id && (
-                    <AllComment singlePost={singlePost} />
+                singlePost && (
+                    <AllComment postId={singlePost?._id} />
                 )
             }
         </div>

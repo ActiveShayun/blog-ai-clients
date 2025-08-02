@@ -1,7 +1,7 @@
 'use client'
 import addBlogs from "@/app/apies/addBlog";
 import { uploadImage } from "@/app/utility/utility";
-import AddBlogsForm from "@/components/shared/blogForm/page";
+import AddBlogsForm from "@/components/shared/addBlogForm/page";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

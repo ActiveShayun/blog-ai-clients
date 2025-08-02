@@ -23,20 +23,18 @@ const AdminDashboardLayout = async ({ children }) => {
         <NavLink href={'/adminDashboard/users'}>Users</NavLink>
     </>
     return (
-        <div className=''>
             <div className='grid grid-cols-12 gap-4'>
                 {/* route */}
-                <div className='col-span-3 rounded-xl'>
+                <div className='col-span-2 rounded-xl '>
                     <div className='flex flex-col gap-4 font-medium'>
                         {routes}
                     </div>
                 </div>
                 {/* layout */}
-                <div className='col-span-9 rounded-xl'>
+                <div className='col-span-10 rounded-xl'>
                     {children}
                 </div>
             </div>
-        </div>
     );
 };
 

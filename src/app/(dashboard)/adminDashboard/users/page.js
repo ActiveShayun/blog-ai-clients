@@ -1,13 +1,15 @@
+import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import MakeAdminButton from "./MakeAdmin";
 import UserDelete from "./UserDelete";
 
 
 const Users = async () => {
-    const res = await fetch('http://192.168.0.111:3000/api/usersRelated/users', {
-        cache: 'no-store'
-    })
-    const users = await res.json()
-    console.log(users);
+    const userCollection = await dbConnect(collectionNameObj.userCollection);
+    const usersDb = await userCollection.find({}).toArray();
+    const users = usersDb.map(user => ({
+        ...user,
+        _id: user._id.toString()
+    }))
 
     return (
         <div>
@@ -42,7 +44,6 @@ const Users = async () => {
                                 )
                             })
                         }
-
                     </tbody>
                 </table>
             </div>

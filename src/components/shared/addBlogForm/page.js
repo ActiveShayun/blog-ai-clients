@@ -40,7 +40,10 @@ const AddBlogsForm = ({ loading, session, handleSubmit, register, onSubmit, erro
                                         multiple
                                     />
                                     {
-                                        errors?.blogBanner && <p>{errors?.message?.blogBanner}</p>
+                                        errors?.blogBanner &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.blogBanner?.message}
+                                        </p>
                                     }
                                 </Button>
                             </div>
@@ -55,7 +58,9 @@ const AddBlogsForm = ({ loading, session, handleSubmit, register, onSubmit, erro
                                         className="input w-full"
                                         placeholder="Email" />
                                     {
-                                        errors?.authorEmail && <p>{errors?.message?.authorEmail}</p>
+                                        errors?.authorEmail &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.authorEmail?.message}</p>
                                     }
                                 </div>
                                 {/* author name */}
@@ -66,7 +71,9 @@ const AddBlogsForm = ({ loading, session, handleSubmit, register, onSubmit, erro
                                         className="input w-full"
                                         placeholder="Enter your name" />
                                     {
-                                        errors?.authorName && <p>{errors?.message?.authorName}</p>
+                                        errors?.authorName &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.authorName?.message}</p>
                                     }
                                 </div>
                             </div>
@@ -80,7 +87,9 @@ const AddBlogsForm = ({ loading, session, handleSubmit, register, onSubmit, erro
                                         className="input w-full"
                                         placeholder="Enter a blog title" />
                                     {
-                                        errors?.title && <p>{errors?.message?.title}</p>
+                                        errors?.title &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.title?.message}</p>
                                     }
                                 </div>
                                 {/*category */}
@@ -100,7 +109,9 @@ const AddBlogsForm = ({ loading, session, handleSubmit, register, onSubmit, erro
                                         <option value={'culture'}>Culture</option>
                                     </select>
                                     {
-                                        errors?.category && <p>{errors?.message?.category}</p>
+                                        errors?.category &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.category?.message}</p>
                                     }
                                 </div>
                             </div>
@@ -114,7 +125,9 @@ const AddBlogsForm = ({ loading, session, handleSubmit, register, onSubmit, erro
                                         className="input w-full"
                                         placeholder="Enter blog tags/keywords" />
                                     {
-                                        errors?.tags && <p>{errors?.message?.tags}</p>
+                                        errors?.tags &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.tags?.message}</p>
                                     }
                                 </div>
                                 {/*Main Content*/}
@@ -125,7 +138,10 @@ const AddBlogsForm = ({ loading, session, handleSubmit, register, onSubmit, erro
                                         className="input w-full"
                                         placeholder="Enter blog description" />
                                     {
-                                        errors?.description && <p>{errors?.message?.description}</p>
+                                        errors?.description &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.description?.message}
+                                        </p>
                                     }
                                 </div>
                             </div>

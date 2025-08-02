@@ -15,8 +15,8 @@ const Navbar = () => {
             <>
                 {
                     session?.user?.role === 'Admin' ?
-                        <Link href={'/adminDashboard/addBlogForm'}>Dashboard</Link> :
-
+                        <Link href={'/adminDashboard/allBlogs'}>Dashboard</Link>
+                        :
                         <Link href={'/userDashboard/myAddedBlogs'}>Dashboard</Link>
                 }
             </> :
@@ -35,7 +35,8 @@ const Navbar = () => {
                         onClick={() => signOut()}>Log Out</Link>
                 </> :
                 <>
-
+                    <Link className=' mr-3'
+                        href={'/pages/userAuthentication/loginForm'}>Dashboard</Link>
                 </>
         }
     </>

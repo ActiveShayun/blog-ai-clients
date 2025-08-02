@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import "react-datepicker/dist/react-datepicker.css";
 import toast from 'react-hot-toast';
 import useAxiosPublic from '@/app/useAxiosHook/useAxiosPublic';
-import AddBlogsForm from '@/components/shared/blogForm/page';
+import UpdateBlogPage from '@/components/shared/updateForm/page';
 
 const UpdateForm = ({ params }) => {
     console.log('params', params);
@@ -14,7 +14,7 @@ const UpdateForm = ({ params }) => {
     const { data: session } = useSession()
     console.log(session);
     const useAxios = useAxiosPublic()
-    const update = true;
+
 
     const {
         register,
@@ -51,17 +51,17 @@ const UpdateForm = ({ params }) => {
         }
     }
 
-
     return (
         <div>
-            <AddBlogsForm
+            <UpdateBlogPage
                 session={session}
                 errors={errors}
                 register={register}
                 handleSubmit={handleSubmit}
                 onSubmit={onSubmit}
                 loading={loading}
-                update={update} />
+                params={params}
+            />
         </div>
     );
 };

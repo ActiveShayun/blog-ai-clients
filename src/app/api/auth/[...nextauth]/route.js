@@ -11,7 +11,7 @@ export const authOptions = {
             // The name to display on the sign in form (e.g. 'Sign in with...')
             name: 'Credentials',
             credentials: {
-                username: { label: "Email", type: "text", placeholder: "Enter email" },
+                email: { label: "Email", type: "text", placeholder: "Enter email" },
                 password: { label: "Password", type: "password", placeholder: "Enter password" }
             },
             async authorize(credentials, req) {
@@ -59,17 +59,17 @@ export const authOptions = {
     },
     callbacks: {
         async jwt({ token, user }) {
-            console.log('create admin', token, user);
+          console.log('Sign in - user present:', user ? user : 'Sign-in না', token);
             if (user) {
-                token.id = token.user
+                token.id = user.id || token.sub
                 token.role = user.role
             }
             return token
         },
         async session({ session, token }) {
-            session.user.id = token.id
+            session.user.id = token.id || token.sub
             session.user.role = token.role
-            console.log('session ', session, token);
+            console.log('session ', session);
             return session
         }
     },

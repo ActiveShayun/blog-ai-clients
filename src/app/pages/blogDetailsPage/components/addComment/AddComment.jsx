@@ -10,6 +10,7 @@ import { uploadImage } from '@/app/utility/utility';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import styled from '@emotion/styled';
 import useAxiosPublic from '@/app/useAxiosHook/useAxiosPublic';
+import { useRouter } from 'next/navigation';
 const labels = {
     0.5: 'Useless',
     1: 'Useless+',
@@ -36,16 +37,17 @@ const VisuallyHiddenInput = styled('input')({
     whiteSpace: 'nowrap',
     width: 1,
 });
-const AddComment = ({ singlePost, refetch }) => {
-    console.log(singlePost);
+const AddComment = ({ postId }) => {
+    console.log(postId);
     const { data: session } = useSession()
     console.log(session);
     const [loading, setLoading] = useState(false)
     const [value, setValue] = React.useState(0);
     const [hover, setHover] = React.useState(-1);
     const [error, setError] = useState('');
+    const router = useRouter();
 
-    const useAxios = useAxiosPublic()
+    const useAxios = useAxiosPublic();
     console.log(value);
 
     const {
@@ -61,14 +63,14 @@ const AddComment = ({ singlePost, refetch }) => {
         toast.success('Your Comment Adding...')
         setLoading(true)
         console.log('data', formData)
-        const image =await uploadImage(formData.userPhoto[0])
+        const image = await uploadImage(formData.userPhoto[0])
         try {
             const blog = {
                 authorEmail: session?.user.email,
                 authorName: formData.name,
                 userPhoto: image,
                 description: formData.comment,
-                postId: singlePost._id,
+                postId: postId,
                 feedBack: value,
                 like: 0
             }
@@ -78,9 +80,9 @@ const AddComment = ({ singlePost, refetch }) => {
                 toast.success('comment Added Successful')
                 setLoading(false)
                 reset()
-                refetch()
                 setError('')
                 setValue(0)
+                router.refresh()
             }
         } catch (error) {
             console.log(error);

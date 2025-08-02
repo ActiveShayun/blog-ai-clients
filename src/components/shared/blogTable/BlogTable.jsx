@@ -21,6 +21,20 @@ const BlogTable = ({ blog, idx }) => {
             router.refresh()
         }
     }
+
+    const handleStatusUpdate = async (id) => {
+        try {
+            console.log(id);
+            const res = await useAxios.patch(`/api/blogsRelatedApis/statusUpdate/${id}`)
+            console.log('update status', res);
+            if (res.data.modified > 0) {
+                toast.success('update successfully Done')
+                router.refresh()
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
         <>
             <tr className='text-left'>
@@ -32,12 +46,17 @@ const BlogTable = ({ blog, idx }) => {
                         alt={blog?.title}
                     />
                 </th>
-                <th>{blog.title}</th>
                 <th>{blog.category}</th>
                 <th className='cursor-pointer'>
-                    <Link href={`/blogDetails/${blog._id}`}>
+                    <Link href={`/pages/blogDetailsPage/${blog._id}`}>
                         Details
                     </Link>
+                </th>
+                <th>
+                    <button disabled={blog?.status === 'approved'}
+                        onClick={() => handleStatusUpdate(blog?._id)}>
+                        {blog?.status === 'approved' ? 'Approved' : 'Pending'}
+                    </button>
                 </th>
                 <th className='text-2xl'>
                     <Link href={`/userDashboard/updateBlog/${blog._id}`}>

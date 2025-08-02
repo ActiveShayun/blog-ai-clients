@@ -6,12 +6,13 @@ import { NextResponse } from "next/server";
 
 
 export async function PATCH(req, { params }) {
-    const id = await params
+    const id = await params?.id;
+    console.log(id);
     const blogsCollection = await dbConnect(collectionNameObj.blogsCollection)
     const filter = { _id: new ObjectId(id) }
     const upDatedDoc = {
         $inc: {
-            disLike:  1
+            disLike: +1
         }
     }
     const result = await blogsCollection.updateOne(filter, upDatedDoc, { upsert: true })

@@ -1,0 +1,192 @@
+'use client'
+import { RiLoaderLine } from "react-icons/ri";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { styled } from '@mui/material/styles';
+import { Button } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "@/app/useAxiosHook/useAxiosPublic";
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
+
+const UpdateBlogPage = ({ params, loading, session, handleSubmit, register, onSubmit, errors, update }) => {
+    // console.log(params);
+    const useAxios = useAxiosPublic()
+
+    const { data: blog = {} } = useQuery({
+        queryKey: ['blog'],
+        queryFn: async () => {
+            const res = await useAxios.get(`/api/blog/${params?.id}`)
+            // console.log('UpdateBlog', res.data);
+            return res.data
+        }
+    })
+    // console.log(blog);
+    return (
+        <div className="hero-content flex-col lg:flex-row-reverse w-full">
+            <div className="card bg-base-100 w-full shadow-2xl">
+                <div className="card-body w-full ">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <fieldset className="fieldset w-full">
+                            <div>
+                                <Button
+                                    component="label"
+                                    role={undefined}
+                                    variant="contained"
+                                    tabIndex={-1}
+                                    startIcon={<CloudUploadIcon />}
+                                >
+                                    Upload files
+                                    <VisuallyHiddenInput
+                                        type="file"
+                                        {...register('blogBanner', { required: 'image is required' })}
+                                        multiple
+                                    />
+                                    {
+                                        errors?.blogBanner &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.blogBanner?.message}
+                                        </p>
+                                    }
+                                </Button>
+                            </div>
+                            {/* row 1 */}
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-3">
+                                {/* Author Email */}
+                                <div>
+                                    <label className="label mb-2 text-lg">Author Email</label>
+                                    <input type="email"
+                                        defaultValue={blog?.authorEmail}
+                                        {...register("authorEmail", { required: 'email is required' })}
+                                        className="input w-full"
+                                        placeholder="Email" />
+                                    {
+                                        errors?.authorEmail &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.authorEmail?.message}</p>
+                                    }
+                                </div>
+                                {/* author name */}
+                                <div>
+                                    <label className="label mb-2 text-lg">Name</label>
+                                    <input type="text"
+                                        defaultValue={blog?.authorName}
+                                        {...register("authorName", { required: 'name is required' })}
+                                        className="input w-full"
+                                        placeholder="Enter your name" />
+                                    {
+                                        errors?.authorName &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.authorName?.message}</p>
+                                    }
+                                </div>
+                            </div>
+                            {/* row 2 */}
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-3">
+                                {/*title */}
+                                <div>
+                                    <label className="label mb-2 text-lg">Title</label>
+                                    <input type="text"
+                                        defaultValue={blog?.title}
+                                        {...register('title', { required: 'title is required' })}
+                                        className="input w-full"
+                                        placeholder="Enter a blog title" />
+                                    {
+                                        errors?.title &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.title?.message}</p>
+                                    }
+                                </div>
+                                {/*category */}
+                                <div>
+                                    <label className="label block mb-2 text-lg">Pick a category</label>
+                                    <select
+                                        {...register('category', { required: 'category is required' })}
+                                        defaultValue={blog?.category}
+                                        className="select w-full" required>
+                                        <option disabled={true}>Pick a category</option>
+                                        <option value={'technology'}>Technology</option>
+                                        <option value={'programming'}>Programming</option>
+                                        <option value={'lifeStyle'}>Life Style</option>
+                                        <option value={'sports'}>Sports</option>
+                                        <option value={'business'}>Business</option>
+                                        <option value={'travel'}>Travel</option>
+                                        <option value={'culture'}>Culture</option>
+                                    </select>
+                                    {
+                                        errors?.category &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.category?.message}</p>
+                                    }
+                                </div>
+                            </div>
+                            {/* row 3 */}
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-3">
+                                {/*Tags/Keywords*/}
+                                <div>
+                                    <label className="label mb-2 text-lg">Blog Tags/Keywords</label>
+                                    <input type="text"
+                                        defaultValue={blog?.tags}
+                                        {...register('tags', { required: 'tags is required' })}
+                                        className="input w-full"
+                                        placeholder="Enter blog tags/keywords" />
+                                    {
+                                        errors?.tags &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.tags?.message}</p>
+                                    }
+                                </div>
+                                {/*Main Content*/}
+                                <div>
+                                    <label className="label mb-2 text-lg">Blog Description</label>
+                                    <input type="text"
+                                        defaultValue={blog?.description}
+                                        {...register('description', { required: 'description is required' })}
+                                        className="input w-full"
+                                        placeholder="Enter blog description" />
+                                    {
+                                        errors?.description &&
+                                        <p className="text-red-800 text-base">
+                                            {errors?.description?.message}
+                                        </p>
+                                    }
+                                </div>
+                            </div>
+                            {
+                                loading ?
+                                    <div>
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            disableElevation
+                                            className="btn btn-neutral mt-4 flex items-center gap-3 tracking-widest text-lg">
+                                            <span className="animate-spin text-lg">
+                                                <RiLoaderLine /></span>
+                                            Updating Blog....
+                                        </Button>
+                                    </div> :
+                                    <Button
+                                        type='submit'
+                                        variant="contained"
+                                        disableElevation
+                                        className="btn btn-neutral mt-4 tracking-widest text-lg">
+                                        Update Blog</Button>
+                            }
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default UpdateBlogPage;
