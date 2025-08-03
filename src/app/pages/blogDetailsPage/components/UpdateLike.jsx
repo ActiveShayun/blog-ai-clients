@@ -2,6 +2,7 @@
 import useAxiosPublic from '@/app/useAxiosHook/useAxiosPublic';
 import { useRouter } from 'next/navigation';
 import { FcDislike, FcLike } from 'react-icons/fc';
+import { FaRegEye } from "react-icons/fa";
 
 
 const updateLike = ({ singlePost }) => {
@@ -36,7 +37,10 @@ const updateLike = ({ singlePost }) => {
                 <FcDislike />
                 <span>{singlePost?.disLike}</span>
             </button>
-            <p>View {singlePost.views} People</p>
+            <p className='flex items-center gap-2'>
+                <FaRegEye />
+                {singlePost.views}
+            </p>
         </div>
     );
 };

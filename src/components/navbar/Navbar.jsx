@@ -10,7 +10,6 @@ const Navbar = () => {
     const deskTopMenu = <>
         <Link href={'/'}>Home</Link>
         <Link href={'/about'}>About</Link>
-        <Link href={'/pages/allBlogPage'}>All Blog</Link>
         {session ?
             <>
                 {
@@ -20,8 +19,10 @@ const Navbar = () => {
                         <Link href={'/userDashboard/myAddedBlogs'}>Dashboard</Link>
                 }
             </> :
-            <Link className=' mr-3'
-                href={'/pages/userAuthentication/loginForm'}>Dashboard</Link>
+            <>
+                <Link className=' mr-3'
+                    href={'/pages/userAuthentication/loginForm'}>Dashboard</Link>
+            </>
         }
     </>
 
@@ -41,7 +42,7 @@ const Navbar = () => {
         }
     </>
     return (
-        <div className="navbar bg-base-100 shadow-sm">
+        <div className="navbar backdrop-blur-xl text-white bg-white/10 shadow-md  z-50 max-w-7xl py-0 p-0 absolute top-0">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -49,7 +50,7 @@ const Navbar = () => {
                     </div>
                     <ul
                         tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                        className="menu Navbar menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                         {deskTopMenu}
                     </ul>
                 </div>

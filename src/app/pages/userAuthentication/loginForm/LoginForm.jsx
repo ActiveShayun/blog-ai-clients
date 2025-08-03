@@ -1,6 +1,7 @@
 'use client'
 import { Button } from '@mui/material';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -65,6 +66,13 @@ const LoginForm = () => {
                             variant="contained">
                             Sign In</Button>
                     </div>
+                    <p className='text-center'>
+                        Do you have an account
+                        <Link className=' ml-3'
+                            href={'/pages/userAuthentication/register'}>
+                            Signup
+                        </Link>
+                    </p>
                 </div>
             </form>
         </div>

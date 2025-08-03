@@ -1,47 +1,96 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import "swiper/css/navigation";
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 // Import Swiper styles
-import "swiper/css";
-import GlobalApi from "@/app/globalApi/GlobalApi";
-import Card from "./components/Card";
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 
+// import required modules
+import { Pagination, Navigation } from 'swiper/modules';
+import GlobalApi from '@/app/globalApi/GlobalApi';
+import SliderPrev from '@/components/shared/sliderButton/SliderPrev';
+import SliderNext from '@/components/shared/sliderButton/SliderNext';
+import AnimatedText from '@/components/shared/animateText/AnimateText';
+import Link from 'next/link';
 
-export default function App() {
-    const [allData, isLoading, error] = GlobalApi()
-    const lifeStyle = allData.filter(blog => blog?.category === 'lifeStyle').slice(0, 1)
-    const business = allData.filter(blog => blog?.category === 'business').slice(0, 1)
-    const sports = allData.filter(blog => blog?.category === "sports").slice(0, 1)
-    const culture = allData.filter(blog => blog?.category === "culture").slice(0, 1)
-    const travel = allData.filter(blog => blog?.category === "travel").slice(0, 1)
-    const bannerBlog = [...lifeStyle, ...business, ...sports, ...culture, ...travel]
-    console.log('bannerBlog', bannerBlog);
 
+export default function Banner() {
+    const [allData] = GlobalApi()
+    console.log(allData);
+    const prevRef = useRef(null)
+    const nextRef = useRef(null)
+    const [isBeginning, setBeginning] = useState(true)
+    const [isEnd, setEnd] = useState(false)
+
+    const handleSlideChange = (swiper) => {
+        setBeginning(swiper.isBeginning)
+        setEnd(swiper.isEnd)
+    }
+    const data = []
     return (
         <>
-            <Swiper
-                modules={[Navigation]}
-                navigation={true}
-                watchSlidesProgress={true}
-                slidesPerView={3}
-                className="mySwiper">
-                {
-                    bannerBlog?.map(blog => {
-                        return <SwiperSlide>
-                            <Card
-                                key={blog._id}
-                                title={blog.title}
-                                category={blog.category}
-                                blogBanner={blog.blogBanner}
-                                _id={blog._id} />
-                        </SwiperSlide>
+            <div className="relative">
+                <Swiper
+                    pagination={{
+                        type: 'fraction',
+                    }}
+                    navigation={{
+                        prevEl: prevRef.current,
+                        nextEl: nextRef.current
+                    }}
+                    onBeforeInit={(swiper) => {
+                        swiper.navigation.prevEl = prevRef.current,
+                            swiper.navigation.nextEl = nextRef.current
+                    }}
+                    onSlideChange={handleSlideChange}
+                    modules={[Pagination, Navigation]}
+                    className="mySwiper"
 
-                    })
-                }
-            </Swiper>
+                >
+                    <>
+                        {
+                            allData?.map(blog => {
+                                return <SwiperSlide key={blog?._id} className=''>
+                                    <div className="lg:h-screen w-full relative">
+                                        <img
+                                            className="w-full h-full rounded-md object-cover"
+                                            src={blog.blogBanner}
+                                            alt=""
+                                        />
+                                        <div className='absolute top-0 left-0 my-2 z-50
+                                         text-white h-full w-full flex flex-col items-center justify-center'>
+                                            <p className='text-white mb-2 font-medium text-lg uppercase'>{blog.category}</p>
+                                            <div className='text-4xl font-medium'>
+                                                <AnimatedText text={blog.title} />
+                                            </div>
+                                            <Link href={`/pages/blogDetailsPage/${blog._id}`}>
+                                                <button className='border py-2 px-6 mt-6 cursor-pointer'>
+                                                    Continue Reading
+                                                </button>
+                                            </Link>
+                                        </div>
+                                        <div className="absolute top-0 left-0 w-full h-full rounded-md bg-gradient-to-b from-black/10 via-black/40 to-black/70 z-30"></div>
+                                    </div>
+                                </SwiperSlide>
+                            })
+                        }
+                    </>
+                </Swiper>
+                {/* Custom Buttons */}
+                <div className="absolute z-10 top-1/2 left-12 transform -translate-y-1/2">
+                    <SliderPrev
+                        isBeginning={isBeginning}
+                        prevRef={prevRef} />
+                </div>
+                <div className="absolute z-10 top-1/2  right-12 transform -translate-y-1/2">
+                    <SliderNext
+                        nextRef={nextRef}
+                        isEnd={isEnd} />
+                </div>
+            </div>
         </>
     );
 }
