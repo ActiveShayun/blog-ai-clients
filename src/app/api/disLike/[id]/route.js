@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(req, { params }) {
     const id = await params?.id;
-    console.log(id);
+    // console.log(id);
     const blogsCollection = await dbConnect(collectionNameObj.blogsCollection)
     const filter = { _id: new ObjectId(id) }
     const upDatedDoc = {

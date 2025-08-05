@@ -1,12 +1,12 @@
 'use client'
-import AxiosPublic from '@/app/useAxiosHook/useAxiosPublic';
+import useAxiosPublic from '@/app/useAxiosHook/useAxiosPublic';
 import { Button } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 const RegisterUser = () => {
-    const useAxios = AxiosPublic()
+    const useAxios = useAxiosPublic()
     const {
         register,
         formState: { errors },

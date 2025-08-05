@@ -19,8 +19,6 @@ export const GET = async (req) => {
             }
         }),
         ...(category && { category })
-
-
     }
     const blogsCollection = await dbConnect(collectionNameObj.blogsCollection)
     const result = await blogsCollection.find(query)

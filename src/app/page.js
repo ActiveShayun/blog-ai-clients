@@ -7,6 +7,7 @@ import Layout from "./components/lifeStyle/lifestyleLayout/Layout";
 import Popular from "./components/popularSection/aside/Popular";
 import TechLayout from "./components/technologySection/layout/TechLayout";
 import Travel from "./components/travelSection/Travel";
+import MostPopular from "../app/components/mostPopularSection/MostPopular"
 
 
 
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <div>
       <Banner />
+      <MostPopular />
       <Travel />
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         <section className="col-span-8">

@@ -15,6 +15,7 @@ import SliderPrev from '@/components/shared/sliderButton/SliderPrev';
 import SliderNext from '@/components/shared/sliderButton/SliderNext';
 import AnimatedText from '@/components/shared/animateText/AnimateText';
 import Link from 'next/link';
+import Image from 'next/image';
 
 
 export default function Banner() {
@@ -55,10 +56,13 @@ export default function Banner() {
                             allData?.map(blog => {
                                 return <SwiperSlide key={blog?._id} className=''>
                                     <div className="lg:h-screen w-full relative">
-                                        <img
+                                        <Image
                                             className="w-full h-full rounded-md object-cover"
                                             src={blog.blogBanner}
-                                            alt=""
+                                            alt={blog.title}
+                                            width={500}
+                                            height={600}
+                                            unoptimized
                                         />
                                         <div className='absolute top-0 left-0 my-2 z-50
                                          text-white h-full w-full flex flex-col items-center justify-center'>
